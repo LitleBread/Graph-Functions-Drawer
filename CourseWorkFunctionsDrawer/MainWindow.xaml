@@ -1,0 +1,104 @@
+﻿<Window x:Class="CourseWorkFunctionsDrawer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseWorkFunctionsDrawer"
+        xmlns:xctk="http://schemas/xceed.com/wpf/xaml/toolkit" 
+        xmlns:xctk1="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        x:Name="MWindow"
+        Title="MainWindow" Height="600" Width="1000">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+
+        
+        
+        <Grid x:Name="GrapghGrid" Grid.Column="0" MouseDown="GrapghGrid_MouseDown" MouseMove="GrapghGrid_MouseMove" MouseWheel="GrapghGrid_MouseWheel">
+            
+        </Grid>
+        <Border Grid.Column="1" BorderThickness="2 0 0 0" BorderBrush="Black">
+            <Grid x:Name="Info" 
+              Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="270"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="5">
+                    <TextBlock x:Name="scaleFactorTB"/>
+                    <TextBlock x:Name="sfTB"/>
+                    <TextBlock x:Name="ErrorMessageTBLock" 
+                           Margin="15" Text="Error Occured" 
+                            TextAlignment="Center" 
+                           FontWeight="Bold"
+                           Foreground="Red"
+                           />
+                    <TextBox x:Name="GraphEnterTBox" Margin="10 5" Height="25" Text="sin(x)" />
+                    <Button x:Name="DrawButton" Content="Нарисовать" Margin="10 5" Height="30"  Click="DrawButton_Click"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="От"  VerticalAlignment="Center"/>
+                        <TextBox   Text="-100" x:Name="minVal" Margin="5" Width="80" Height="30" />
+                        <TextBlock Text="До"  VerticalAlignment="Center"/>
+                        <TextBox   Text="100" x:Name="maxVal" Margin="5" Width="80" Height="30" />
+                        <TextBlock Text="Шаг"  VerticalAlignment="Center"/>
+                        <TextBox   Text="1" x:Name="step" Margin="5" Width="80" Height="30" />
+                    </StackPanel>
+                    <StackPanel>
+                        <RadioButton x:Name="Polar" Content="Полярная система координат"/>
+                        <RadioButton x:Name="Decart" Content="Декартова система координат (градусы)" IsChecked="True"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 15">
+                            <ComboBox x:Name="DashStyleComboBox" Width="103" Margin="5 2"/>
+                            <xctk1:ColorPicker x:Name="ColorPicker" 
+                                              Grid.Column="1"
+                                              Width="103"
+                                              Margin="5 2"
+                                              DisplayColorAndName="True"
+                                              AvailableColorsSortingMode="HueSaturationBrightness" ></xctk1:ColorPicker>
+                            <TextBox x:Name="ThicknessTextBox" Width="102" Margin="5 2" TextAlignment="Right"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                </StackPanel>
+
+                <ListBox Margin="10" Grid.Row="1" x:Name="GraphsList" ItemsSource="{Binding Path=graphs}" KeyDown="GraphsList_KeyDown">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding ToShow}"/>
+                                <TextBlock Margin="15 0" Text="{Binding Path=Function}" />
+                                <TextBlock Margin="15 0" Text="{Binding Path=CoordinateSystem}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button Margin="15 5" x:Name="deleteGraphBtn" Content="Удалить график" Height="30"   Grid.Row="2" Click="deleteGraphBtn_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
